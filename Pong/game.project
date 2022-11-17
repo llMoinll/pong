@@ -1,0 +1,32 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 960
+height = 640
+
+[android]
+input_method = HiddenInputField
+app_icon_192x192 = /builtins/assets/images/logo/logo_256.png
+app_icon_144x144 = /builtins/assets/images/logo/logo_256.png
+app_icon_96x96 = /builtins/assets/images/logo/logo_256.png
+app_icon_72x72 = /builtins/assets/images/logo/logo_256.png
+app_icon_48x48 = /builtins/assets/images/logo/logo_256.png
+app_icon_36x36 = /builtins/assets/images/logo/logo_256.png
+
+[project]
+title = Pong
+
+[ios]
+app_icon_76x76 = /builtins/assets/images/logo/logo_256.png
+app_icon_152x152 = /builtins/assets/images/logo/logo_256.png
+app_icon_167x167 = /builtins/assets/images/logo/logo_256.png
+app_icon_120x120 = /builtins/assets/images/logo/logo_256.png
+app_icon_180x180 = /builtins/assets/images/logo/logo_256.png
+
+[input]
+game_binding = /sounds/input/game.input_bindingc
+

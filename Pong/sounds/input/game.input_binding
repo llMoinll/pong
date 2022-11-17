@@ -1,0 +1,36 @@
+key_trigger {
+  input: KEY_W
+  action: "player1_up"
+}
+key_trigger {
+  input: KEY_S
+  action: "player1_down"
+}
+key_trigger {
+  input: KEY_UP
+  action: "player2_up"
+}
+key_trigger {
+  input: KEY_DOWN
+  action: "player2_down"
+}
+key_trigger {
+  input: KEY_LCTRL
+  action: "player3_left"
+}
+key_trigger {
+  input: KEY_LSHIFT
+  action: "player3_right"
+}
+key_trigger {
+  input: KEY_V
+  action: "player4_left"
+}
+key_trigger {
+  input: KEY_B
+  action: "player4_right"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "touch"
+}

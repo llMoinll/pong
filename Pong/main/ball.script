@@ -1,0 +1,106 @@
+function init(self)
+	-- set the random number seed and discard the first value
+	math.randomseed(os.time())
+	math.random()
+	-- store the original position of the ball so we can reset it after a goal
+	self.respawn_position = go.get_position()
+	-- spawn the ball
+	self.speed = 550
+	spawn_ball(self)
+end
+
+function spawn_ball(self)
+	go.set_position(self.respawn_position)
+	-- set an initial random direction of travel using a vector
+	local x = math.random(1,3)
+	local y = math.random(1,3)
+	local x_direction = math.random(1,2)
+	local y_direction = math.random(1,2)
+	if x_direction == 1 then
+		x = -x
+	end
+	if y_direction == 1 then
+		y = -y
+	end
+	self.direction = vmath.normalize(vmath.vector3(x,y, 0))
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- move the ball in it's current direction at a speed in pixels per second
+	local pos = go.get_position()
+	pos = pos + self.direction * self.speed * dt
+	go.set_position(pos)
+
+	-- check if the ball has hit the top or bottom of the screen
+	if pos.y < -300 then
+		msg.post("score", "player3_scored")
+		sound.play("#goal")
+		spawn_ball(self)
+	end
+	if pos.y > 300 then
+		msg.post("score", "player4_scored")
+		sound.play("#goal")
+		spawn_ball(self)
+
+	end
+
+	-- check if a goal has been scored
+	if pos.x < -480 then
+		msg.post("score", "player2_scored")
+		sound.play("#goal")
+		spawn_ball(self)
+	end
+	if pos.x > 480 then
+		msg.post("score", "player1_scored")
+		sound.play("#goal")
+		spawn_ball(self)
+	end
+end
+
+function fixed_update(self, dt)
+	-- This function is only called if 'Use Fixed Timestep' is enabled in the Physics section of game.project
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		-- Move ball out of the paddle
+		go.set_position(go.get_position() + message.normal * message.distance)
+		-- Calculate bounce angle
+		local pos = go.get_position()
+		local paddle = go.get_position(message.other_id)
+		local paddle_intersect = paddle.y - pos.y
+		local bounce_vector = paddle_intersect * 1.3
+		-- Set new direction
+		self.direction.y = -math.sin(bounce_vector)
+		self.direction.x =  -self.direction.x * 1.1
+		-- Normalise direction to ensure constant speed
+		sound.play("#bounce")
+	end
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end
